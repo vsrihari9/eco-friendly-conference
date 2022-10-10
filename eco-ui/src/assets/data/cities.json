@@ -1,0 +1,11 @@
+{
+  "locations" : [
+    {"label": "Atlanta, GA (ATL)", "value": 1},
+    {"label": "Denver, CO (DEN)", "value": 2},
+    {"label": "Fort Worth, TX (FTW)", "value": 3},
+    {"label": "San Diego, CA (SAN)", "value": 4},
+    {"label": "Seattle, WA (SEA)", "value": 5},
+    {"label": "St Louis, MO (STL)", "value": 6},
+    {"label": "Washington, DC (WAS)", "value": 7}
+  ]
+}

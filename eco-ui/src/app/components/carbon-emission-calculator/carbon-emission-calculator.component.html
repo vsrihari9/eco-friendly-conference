@@ -1,0 +1,85 @@
+<div class="container">
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1>Welcome to Estimate Travel Cost</h1>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Eco-friendly Cost Estimation Calculator</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="calc-form" [formGroup]="ecoForm">
+        <div>
+
+          <mat-form-field appearance="fill" class="form-element">
+            <mat-label>Cabin Class</mat-label>
+            <mat-select formControlName="travelClass">
+              <mat-option *ngFor="let cabin of cabinClasses" [value]="cabin.value">
+                {{cabin.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-element">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker" formGroupName="travelDateRange" [min]="minDate" [max]="maxDate">
+              <input matStartDate placeholder="Start date" formControlName="startDate" required>
+              <input matEndDate placeholder="End date" formControlName="endDate" required>
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-error *ngIf="ecoForm.get('travelDateRange')?.get('startDate')?.hasError('matStartDateInvalid')">
+              Invalid start date.
+            </mat-error>
+            <mat-error *ngIf="ecoForm.get('travelDateRange')?.get('endDate')?.hasError('matEndDateInvalid')">
+              Invalid end date.
+            </mat-error>
+            <mat-error *ngIf="ecoForm.get('travelDateRange')?.get('startDate')?.invalid || ecoForm.get('travelDateRange')?.get('endDate')?.invalid">
+              Valid date required.
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="fill" class="form-element">
+            <mat-label>Travellers City</mat-label>
+            <mat-select formControlName="travellers" multiple>
+              <mat-option *ngFor="let city of cities" [value]="city.value">
+                {{city.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-element">
+            <mat-label>Conference City</mat-label>
+            <mat-select formControlName="sites" multiple>
+              <mat-option *ngFor="let city of cities" [value]="city.value">
+                {{city.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="form-element action-btns">
+            <button mat-raised-button color="primary" type="submit" class="button btn"
+                    (click)="onSubmit()" [disabled]="!ecoForm.valid">Submit</button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+<!--      <button mat-button>LIKE</button>-->
+<!--      <button mat-button>SHARE</button>-->
+    </mat-card-actions>
+  </mat-card>
+
+
+
+
+</div>
