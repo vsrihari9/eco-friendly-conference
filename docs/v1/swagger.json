@@ -1,0 +1,554 @@
+{
+  "basePath": "/",
+  "host": "localhost:3100",
+  "info": {
+    "title": "node-api-svc-starter",
+    "version": "0.0.1",
+    "license": {
+      "name": "UNLICENSED"
+    },
+    "description": "Starter Project for building REST API Microservices using Node.js and Express"
+  },
+  "paths": {
+    "/healthcheck": {
+      "get": {
+        "summary": "/healthcheck",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "API Micro-Service"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Ready"
+                },
+                "version": {
+                  "type": "string",
+                  "example": "0.0"
+                },
+                "started": {
+                  "type": "string",
+                  "example": "2020-05-31T04:01:54.315Z"
+                },
+                "uptime": {
+                  "type": "number",
+                  "example": 0.231
+                },
+                "currentTime": {
+                  "type": "string",
+                  "example": "2020-05-31T04:01:54.546Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Failed to retrieve healthcheck status"
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/v1/contracts": {
+      "get": {
+        "summary": "/v1/contracts",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "CONTRACT_ID": {
+                    "type": "string"
+                  },
+                  "CONTRACT_NAME": {
+                    "type": "string"
+                  },
+                  "CONTRACT_STATUS": {
+                    "type": "string"
+                  },
+                  "JOINT_VENTURE_FLAG": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "contract_status": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "contract_status": "\"contract_status\" must be one of [A, W]"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Anonymous access prohibited"
+                }
+              }
+            }
+          },
+          "500": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Failed to fetch ECM Contracts"
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "summary": "/v1/contracts",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "CONTRACT_ID": {
+                    "type": "string"
+                  },
+                  "CONTRACT_NAME": {
+                    "type": "string"
+                  },
+                  "CONTRACT_STATUS": {
+                    "type": "string"
+                  },
+                  "JOINT_VENTURE_FLAG": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "contract_status": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "contract_status"
+                    ]
+                  },
+                  "example": [
+                    {
+                      "contract_status": "\"contract_status\" is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Anonymous access prohibited"
+                }
+              }
+            }
+          },
+          "500": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Failed to fetch ECM Contracts"
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/v1/contracts-alt": {
+      "get": {
+        "summary": "/v1/contracts-alt",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "CONTRACT_ID": {
+                    "type": "string"
+                  },
+                  "CONTRACT_NAME": {
+                    "type": "string"
+                  },
+                  "CONTRACT_STATUS": {
+                    "type": "string"
+                  },
+                  "JOINT_VENTURE_FLAG": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "contract_status": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "contract_status": "\"contract_status\" must be one of [A, W]"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Anonymous access prohibited"
+                }
+              }
+            }
+          },
+          "500": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Failed to fetch ECM Contracts"
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/v1/service-categories": {
+      "get": {
+        "summary": "/v1/service-categories",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "SERVICE_CATEGORY_ID": {
+                    "type": "string"
+                  },
+                  "TITLE": {
+                    "type": "string"
+                  },
+                  "SUBCATEGORY": {
+                    "type": "string"
+                  },
+                  "DESCRIPTION": {
+                    "type": "string"
+                  },
+                  "ADDLDESCRIPTION": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "contract_status": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "contract_status": "\"contract_status\" must be one of [A, W]"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Anonymous access prohibited"
+                }
+              }
+            }
+          },
+          "500": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Failed to fetch service categories"
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/v1/oec-stats": {
+      "get": {
+        "summary": "/v1/oec-stats",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "CNTRCT_ID": {
+                    "type": "string"
+                  },
+                  "CNTRCT_YEAR": {
+                    "type": "string"
+                  },
+                  "ENRLMT_FIL_DT": {
+                    "type": "string"
+                  },
+                  "ENRLMT_DWNLDED": {
+                    "type": "number"
+                  },
+                  "ENRLMT_NOT_DWNLDED": {
+                    "type": "number"
+                  },
+                  "DLNQNT_ENRLMTS": {
+                    "type": "number"
+                  },
+                  "CREATD_DT": {
+                    "type": "string"
+                  },
+                  "CREATD_BY": {
+                    "type": "string"
+                  },
+                  "LAST_UPDTD_DT": {
+                    "type": "string"
+                  },
+                  "LAST_UPDTD_BY": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "contract_status": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "contract_status": "\"contract_status\" must be one of [A, W]"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Anonymous access prohibited"
+                }
+              }
+            }
+          },
+          "500": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Failed to fetch OEC stats"
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "security": [
+    {
+      "JWT": []
+    }
+  ],
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "swagger": "2.0"
+}

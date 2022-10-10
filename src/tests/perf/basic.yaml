@@ -1,0 +1,55 @@
+config:
+  target: 'http://localhost:3100'
+  processor: './auth_helper.js'
+  plugins:
+    expect: {}
+  phases:
+    - duration: 5
+      arrivalRate: 5
+    - duration: 5
+      arrivalRate: 10
+      rampTo: 20
+    - duration: 5
+      arrivalRate: 20
+  defaults:
+scenarios:
+  - name: 'Retrieve Contracts'
+    beforeScenario: 'setupAuthToken'
+    weight: 3
+    flow:
+      - get:
+          headers:
+            authorization: '{{ AUTH_TOKEN }}'
+          url: '/v1/contracts'
+          expect:
+            - statusCode: 200
+  - name: 'Retrieve Contracts (alt)'
+    beforeScenario: 'setupAuthToken'
+    weight: 3
+    flow:
+      - get:
+          headers:
+            authorization: '{{ AUTH_TOKEN }}'
+          url: '/v1/contracts-alt'
+          expect:
+            - statusCode: 200
+  - name: 'Retrieve Service Categories'
+    beforeScenario: 'setupAuthToken'
+    weight: 3
+    flow:
+      - get:
+          headers:
+            authorization: '{{ AUTH_TOKEN }}'
+          url: '/v1/service-categories'
+          expect:
+            - statusCode: 200
+  - name: 'Retrieve OEC Stats'
+    beforeScenario: 'setupAuthToken'
+    weight: 3
+    flow:
+      - get:
+          headers:
+            authorization: '{{ AUTH_TOKEN }}'
+          url: '/v1/oec-stats'
+          expect:
+            - statusCode: 200
