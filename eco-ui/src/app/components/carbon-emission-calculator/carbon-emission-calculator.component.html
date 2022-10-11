@@ -78,7 +78,7 @@
 <!--      <button mat-button>SHARE</button>-->
     </mat-card-actions>
   </mat-card>
-  <!-- <p-table [value]="results">
+  <p-table [columns]="cols" [value]="results">
     <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let col of cols">
@@ -86,14 +86,12 @@
             </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-car>
+    <ng-template pTemplate="body">
         <tr>
             <td *ngFor="let col of cols">
                     {{results[col.field]}}
             </td>
         </tr>
     </ng-template>
-  </p-table> -->
-
-
+  </p-table>
 </div>

@@ -80,11 +80,12 @@ app.get("/cities", async (req, res) => {
 });
 
 app.post("/bestsite", async (req, res) => {
-  const sites = req.body.sites;
-  const travellers = req.body.travellers;
-  const startDate = new Date(req.body.startDate);
-  const endDate = new Date(req.body.endDate);
-  const travelClass = req.body.travelClass;
+  const item = req.body.item;
+  const sites = item.sites;
+  const travellers = item.travellers;
+  const startDate = new Date(item.startDate);
+  const endDate = new Date(item.endDate);
+  const travelClass = item.travelClass;
 
   let perdiem_days = {}
 
@@ -137,6 +138,8 @@ app.post("/bestsite", async (req, res) => {
   }
 
   cities.sort(function(a,b) {return (a.effectiveCost > b.effectiveCost) ? 1 : ((b.effectiveCost > a.effectiveCost) ? -1 : 0);} );
+
+  console.log(cities);
 
   res.json({
     results: cities

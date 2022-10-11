@@ -67,6 +67,8 @@ export class CarbonEmissionCalculatorComponent implements OnInit {
             });
           }
         }
+        console.log('res is..... @@@@ ', this.cols);
+
       });
     } else {
       this.validateAllFormFields(this.ecoForm);
