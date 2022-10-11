@@ -83,8 +83,8 @@ app.post("/bestsite", async (req, res) => {
   const item = req.body.item;
   const sites = item.sites;
   const travellers = item.travellers;
-  const startDate = new Date(item.startDate);
-  const endDate = new Date(item.endDate);
+  const startDate = new Date(item.travelDateRange.startDate);
+  const endDate = new Date(item.travelDateRange.endDate);
   const travelClass = item.travelClass;
 
   let perdiem_days = {}
