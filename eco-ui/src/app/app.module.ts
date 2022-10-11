@@ -17,6 +17,9 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import { TableModule } from 'primeng/table';
 import { MatIconModule } from '@angular/material/icon'
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatTableExporterModule} from "mat-table-exporter";
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { MatIconModule } from '@angular/material/icon'
     MatCardModule,
     MatToolbarModule,
     TableModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatSortModule,
+    MatTableExporterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
