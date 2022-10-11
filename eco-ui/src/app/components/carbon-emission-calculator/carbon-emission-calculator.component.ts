@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AppService} from "../../services/app.service";
 
 @Component({
@@ -9,7 +9,7 @@ import {AppService} from "../../services/app.service";
 })
 export class CarbonEmissionCalculatorComponent implements OnInit {
 
-  ecoForm: FormGroup = new FormGroup({});
+  ecoForm: UntypedFormGroup = new UntypedFormGroup({});
 
   cabinClasses = [
      {label: "Economy", value: "economy"},
@@ -22,7 +22,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
 
-  constructor(private formBuilder: FormBuilder, private service: AppService) {
+  constructor(private formBuilder: UntypedFormBuilder, private service: AppService) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDate = new Date().getDate();
@@ -73,12 +73,12 @@ export class CarbonEmissionCalculatorComponent implements OnInit {
     }
   }
 
-  private validateAllFormFields(formGroup: FormGroup) {
+  private validateAllFormFields(formGroup: UntypedFormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
-      if(control instanceof FormControl) {
+      if(control instanceof UntypedFormControl) {
         control.markAsTouched({onlySelf: true});
-      } else if(control instanceof FormGroup) {
+      } else if(control instanceof UntypedFormGroup) {
         this.validateAllFormFields(control);
       }
     });
