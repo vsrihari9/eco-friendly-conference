@@ -185,13 +185,6 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
     const input = event.input;
     const value = event.value;
 
-    console.log('add value is....', value);
-
-    // Add City
-    if ((value || '').trim()) {
-     // this.selectedCities.push(value.trim());
-    }
-
     // Reset the input value
     if (input) {
       input.value = '';
