@@ -125,12 +125,37 @@ app.post("/bestsite", async (req, res) => {
           origin_city_id in (?) and
           class=?
         GROUP BY dest_city_id
-        ORDER BY airfare
       `,
       [sites, travellers, travelClass]
     );
 
-    const same_loc = await dbQuery(
+    const return_fare = await dbQuery(
+      `
+        SELECT
+          r.origin_city_id as city_id,
+          sum(r.fare) as airfare,
+          sum(r.co2) as co2
+        FROM routes r
+          JOIN cities c ON r.origin_city_id = c.city_id
+        WHERE
+          origin_city_id in (?) and
+          dest_city_id in (?) and
+          class=?
+        GROUP BY origin_city_id
+      `,
+      [sites, travellers, travelClass]
+    );
+
+    cities.forEach((city, i) => {
+      return_fare.forEach((ret, j) => {
+        if(city.city_id === ret.city_id) {
+          cities[i].airfare = Math.round((cities[i].airfare+ret.airfare) * 1e12) / 1e12;
+          cities[i].co2 = Math.round((cities[i].co2+ret.co2) * 1e12) / 1e12;
+        }
+      })
+    });
+
+    const same_city = await dbQuery(
       `
         SELECT
           city_id,
@@ -148,7 +173,7 @@ app.post("/bestsite", async (req, res) => {
       [sites, travellers, cities.map(a => a.city_id)]
     );
 
-    cities.push(...same_loc);
+    cities.push(...same_city);
 
     for(const city of cities) {
       let perdiem = 0;
@@ -167,7 +192,7 @@ app.post("/bestsite", async (req, res) => {
 
     cities.sort(function(a,b) {return (a.effectiveCost > b.effectiveCost) ? 1 : ((b.effectiveCost > a.effectiveCost) ? -1 : 0);} );
 
-    console.log(cities);
+    console.log('final', cities);
 
     res.json({
       results: cities
