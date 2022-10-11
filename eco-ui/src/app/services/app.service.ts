@@ -9,10 +9,13 @@ export class AppService {
   constructor(private http: HttpClient) { }
 
   getLocations() {
-    return this.http.get('../../assets/data/cities.json');
+    return this.http.get('http://localhost:3000/cities');
   }
 
-  calculate() {
-    console.log('perform calculation!!');
+  calculate(obj: any) {
+    return this.http.post('http://localhost:3000/bestsite',
+    {
+      item:obj
+    });
   }
 }

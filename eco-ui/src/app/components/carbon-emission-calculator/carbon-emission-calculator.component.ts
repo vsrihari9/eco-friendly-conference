@@ -17,6 +17,8 @@ export class CarbonEmissionCalculatorComponent implements OnInit {
   ];
 
   cities: any;
+  results: any;
+  cols: any;
   minDate: Date;
   maxDate: Date;
 
@@ -31,8 +33,8 @@ export class CarbonEmissionCalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getLocations().subscribe((res: any) => {
-      console.log('res is..... :::: ', res.locations);
-      this.cities = res.locations;
+      console.log('res is..... :::: ', res.results);
+      this.cities = res.results;
     })
     this.createForm();
   }
@@ -53,7 +55,19 @@ export class CarbonEmissionCalculatorComponent implements OnInit {
     if(this.ecoForm.valid) {
       const obj = this.ecoForm.value;
       console.log('obj val is... @@@ ::: ', obj);
-      this.service.calculate();
+      this.service.calculate(obj).subscribe((res: any) => {
+        console.log('res is..... :::: ', res.results);
+        this.results = res.results;
+        this.cols = [];
+        if (this.results && this.results.length > 0) {
+          for (const col in this.results[0]) {
+            this.cols.push({
+              field: col,
+              header: col,
+            });
+          }
+        }
+      });
     } else {
       this.validateAllFormFields(this.ecoForm);
     }

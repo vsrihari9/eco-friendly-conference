@@ -51,8 +51,8 @@
           <mat-form-field appearance="fill" class="form-element">
             <mat-label>Travellers City</mat-label>
             <mat-select formControlName="travellers" multiple>
-              <mat-option *ngFor="let city of cities" [value]="city.value">
-                {{city.label}}
+              <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                {{city.city + ', ' + city.state + ' (' + city.code + ')'}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -60,8 +60,8 @@
           <mat-form-field appearance="fill" class="form-element">
             <mat-label>Conference City</mat-label>
             <mat-select formControlName="sites" multiple>
-              <mat-option *ngFor="let city of cities" [value]="city.value">
-                {{city.label}}
+              <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                {{city.city + ', ' + city.state + ' (' + city.code + ')'}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -78,8 +78,22 @@
 <!--      <button mat-button>SHARE</button>-->
     </mat-card-actions>
   </mat-card>
-
-
+  <!-- <p-table [value]="results">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of cols">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-car>
+        <tr>
+            <td *ngFor="let col of cols">
+                    {{results[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+  </p-table> -->
 
 
 </div>
