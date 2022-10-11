@@ -20,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon'
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatTableExporterModule} from "mat-table-exporter";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import {MatTableExporterModule} from "mat-table-exporter";
     MatIconModule,
     MatTableModule,
     MatSortModule,
-    MatTableExporterModule
+    MatTableExporterModule,
+    MatAutocompleteModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
