@@ -154,7 +154,7 @@ app.post("/bestsite", async (req, res) => {
         }
       })
     });
-
+    
     const same_city = await dbQuery(
       `
         SELECT
@@ -170,7 +170,7 @@ app.post("/bestsite", async (req, res) => {
           city_id in (?) and
           city_id not in (?)
       `,
-      [sites, travellers, cities.map(a => a.city_id)]
+      [sites, travellers, cities.map(a => a.city_id).concat([0])]
     );
 
     cities.push(...same_city);
