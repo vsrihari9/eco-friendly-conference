@@ -51,6 +51,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
   filteredCities?: Observable<City[]>;
 
   selectedCities: City[] = [];
+  selectedTravellers: number[] = [];
 
   results: any;
   cols: any;
@@ -130,8 +131,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
 
   onSubmit() {
     if(this.ecoForm.valid) {
-      const citiesSelected = this.selectedCities;
-      console.log('citiesSelected array is...', citiesSelected);
+      const citiesSelected = this.selectedTravellers;
       const obj = this.ecoForm.value;
       obj.travellers = citiesSelected;
       console.log('obj val is... @@@ ::: ', obj);
@@ -204,6 +204,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
   selected(event: MatAutocompleteSelectedEvent): void {
     const newValue = event.option.value;
     this.selectedCities.push(event.option.value);
+    this.selectedTravellers.push(newValue.city_id);
     this.cityInput.nativeElement.value = '';
     this.cityCtrl.setValue(null);
   }
