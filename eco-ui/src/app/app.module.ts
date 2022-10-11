@@ -16,6 +16,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import { TableModule } from 'primeng/table';
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TableModule } from 'primeng/table';
     MatDatepickerModule,
     MatCardModule,
     MatToolbarModule,
-    TableModule
+    TableModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
