@@ -61,89 +61,90 @@ app.use(async function (req, res, next) {
   next();
 });
 
-app.get("/", async (req, res) => {
-  const perdiem = await getPerdiemData('Fairfax','VA','2023');
-  console.log(perdiem.months.month);
-  console.log(perdiem.meals);
-  return res.status(200).json(perdiem);
-});
-
 app.get("/health", (req, res) => {
   return res.status(200).json({ message: 'API health: okay' });
 });
 
 app.get("/cities", async (req, res) => {
-  const data = await dbQuery(
-    `select * from cities order by city`
-  );
-  return res.json({results: data});
+  try{
+    const data = await dbQuery(
+      `select * from cities order by city`
+    );
+    return res.json({results: data});
+  } catch(err) {
+    res.status(400).json(err);
+  }
 });
 
 app.post("/bestsite", async (req, res) => {
-  const item = req.body.item;
-  const sites = item.sites;
-  const travellers = item.travellers;
-  const startDate = new Date(item.travelDateRange.startDate);
-  const endDate = new Date(item.travelDateRange.endDate);
-  const travelClass = item.travelClass;
+  try{
+    const item = req.body.item;
+    const sites = item.sites;
+    const travellers = item.travellers;
+    const startDate = new Date(item.travelDateRange.startDate);
+    const endDate = new Date(item.travelDateRange.endDate);
+    const travelClass = item.travelClass;
 
-  let perdiem_days = {}
+    let perdiem_days = {};
 
-  for (var d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-    let month = d.getMonth();
-    let year = d.getFullYear();
-    if(!(year in perdiem_days)) {
-      perdiem_days[year] = {}
-    }
-    if(!(month in perdiem_days[year])) {
-      perdiem_days[year][month] = 0;
-    }
-    perdiem_days[year][month] += 1;
-  }
-
-  const cities = await dbQuery(
-    `
-      SELECT
-        r.dest_city_id,
-        c.city,
-        c.state,
-        c.code,
-        sum(r.fare) as airfare,
-        sum(r.co2) as co2
-      FROM routes r
-        JOIN cities c ON r.dest_city_id = c.city_id
-      WHERE
-        dest_city_id in (?) and
-        origin_city_id in (?) and
-        class=?
-      GROUP BY dest_city_id
-      ORDER BY airfare
-    `,
-    [sites, travellers, travelClass]
-  );
-
-  for(const city of cities) {
-    let perdiem = 0;
-    for(const [year, data] of Object.entries(perdiem_days)){
-      const perdiem_data = await getPerdiemData(city.city, city.state, year);
-      meals = perdiem_data.meals;
-      for(const [month, days] of Object.entries(data)) {
-        lodging = perdiem_data.months.month[month].value;
-        perdiem += meals*days + lodging*days
+    for (var d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      let month = d.getMonth();
+      let year = d.getFullYear();
+      if(!(year in perdiem_days)) {
+        perdiem_days[year] = {}
       }
+      if(!(month in perdiem_days[year])) {
+        perdiem_days[year][month] = 0;
+      }
+      perdiem_days[year][month] += 1;
     }
-    city['perdiem'] = perdiem;
-    city['monetoryCost'] = perdiem + city.airfare;
-    city['effectiveCost'] = city.monetoryCost + city.co2;
+
+    const cities = await dbQuery(
+      `
+        SELECT
+          r.dest_city_id,
+          c.city,
+          c.state,
+          c.code,
+          sum(r.fare) as airfare,
+          sum(r.co2) as co2
+        FROM routes r
+          JOIN cities c ON r.dest_city_id = c.city_id
+        WHERE
+          dest_city_id in (?) and
+          origin_city_id in (?) and
+          class=?
+        GROUP BY dest_city_id
+        ORDER BY airfare
+      `,
+      [sites, travellers, travelClass]
+    );
+
+    for(const city of cities) {
+      let perdiem = 0;
+      for(const [year, data] of Object.entries(perdiem_days)){
+        const perdiem_data = await getPerdiemData(city.city, city.state, year);
+        meals = perdiem_data.meals;
+        for(const [month, days] of Object.entries(data)) {
+          lodging = perdiem_data.months.month[month].value;
+          perdiem += meals*days + lodging*days
+        }
+      }
+      city['perdiem'] = perdiem;
+      city['monetoryCost'] = perdiem + city.airfare;
+      city['effectiveCost'] = city.monetoryCost + city.co2;
+    }
+
+    cities.sort(function(a,b) {return (a.effectiveCost > b.effectiveCost) ? 1 : ((b.effectiveCost > a.effectiveCost) ? -1 : 0);} );
+
+    console.log(cities);
+
+    res.json({
+      results: cities
+    });
+  } catch(err) {
+    res.status(400).json(err);
   }
-
-  cities.sort(function(a,b) {return (a.effectiveCost > b.effectiveCost) ? 1 : ((b.effectiveCost > a.effectiveCost) ? -1 : 0);} );
-
-  console.log(cities);
-
-  res.json({
-    results: cities
-  });
 });
 
 app.listen(port, function () {
