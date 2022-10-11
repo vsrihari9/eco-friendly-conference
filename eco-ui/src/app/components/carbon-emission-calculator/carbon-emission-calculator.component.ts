@@ -39,6 +39,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
   cols: any;
   minDate: Date;
   maxDate: Date;
+  loading = false;
 
   displayedColumns: string[] = ['dest_city_id', 'city', 'state', 'code', 'airfare', 'co2', 'perdiem', 'monetaryCost', 'effectiveCost'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -85,7 +86,9 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
     if(this.ecoForm.valid) {
       const obj = this.ecoForm.value;
       console.log('obj val is... @@@ ::: ', obj);
+      this.loading = true;
       this.service.calculate(obj).subscribe((res: any) => {
+        this.loading = false;
         console.log('res is..... :::: ', res.results);
         this.results = res.results;
         this.cols = [];

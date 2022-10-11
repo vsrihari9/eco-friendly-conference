@@ -79,7 +79,9 @@
     </mat-card-actions>
   </mat-card>
 
-  <mat-card class="page-header"  *ngIf="dataSource.data.length > 0">
+  <img *ngIf="loading" style="padding:20px" src="../../../assets/loading.gif" width=50 height=50/>
+
+  <mat-card class="page-header"  *ngIf="dataSource.data.length > 0 && !loading">
     <mat-card-content>
       <div>
         <h3> Please download Analysis reports in the required format!!</h3>
@@ -93,8 +95,8 @@
                class="mat-elevation-z8 results-tbl" matSort (matSortChange)="announceSortChange($event)">
 
           <ng-container matColumnDef="dest_city_id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="dest_city_id" sortActionDescription="Sort by dest_city_id"> Destination City ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.dest_city_id }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="dest_city_id" sortActionDescription="Sort by dest_city_id"> City ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.city_id }} </td>
           </ng-container>
 
           <ng-container matColumnDef="city">
