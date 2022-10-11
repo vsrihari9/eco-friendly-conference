@@ -65,10 +65,20 @@ app.get("/health", (req, res) => {
   return res.status(200).json({ message: 'API health: okay' });
 });
 
+/*
+    /cities for complete list
+    /cities?q=xyz for filtered cities
+*/
 app.get("/cities", async (req, res) => {
   try{
+    const q = req.query['q'];
+    let query = `select * from cities`;
+    if(q){
+      query += ` where city like ? or state like ? or code like ?`
+    }
+    query += ` order by city`
     const data = await dbQuery(
-      `select * from cities order by city`
+      query, ['%'+q+'%','%'+q+'%','%'+q+'%']
     );
     return res.json({results: data});
   } catch(err) {
@@ -99,10 +109,10 @@ app.post("/bestsite", async (req, res) => {
       perdiem_days[year][month] += 1;
     }
 
-    const cities = await dbQuery(
+    let cities = await dbQuery(
       `
         SELECT
-          r.dest_city_id,
+          r.dest_city_id as city_id,
           c.city,
           c.state,
           c.code,
@@ -119,6 +129,26 @@ app.post("/bestsite", async (req, res) => {
       `,
       [sites, travellers, travelClass]
     );
+
+    const same_loc = await dbQuery(
+      `
+        SELECT
+          city_id,
+          city,
+          state,
+          code,
+          0 as airfare,
+          0 as co2
+        FROM cities
+        WHERE
+          city_id in (?) and
+          city_id in (?) and
+          city_id not in (?)
+      `,
+      [sites, travellers, cities.map(a => a.city_id)]
+    );
+
+    cities.push(...same_loc);
 
     for(const city of cities) {
       let perdiem = 0;
