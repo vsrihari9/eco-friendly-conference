@@ -133,7 +133,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
     if(this.ecoForm.valid) {
       const citiesSelected = this.selectedTravellers;
       const obj = this.ecoForm.value;
-      obj.travellers = citiesSelected;
+      // obj.travellers = citiesSelected;
       console.log('obj val is... @@@ ::: ', obj);
       this.loading = true;
       this.service.calculate(obj).subscribe((res: any) => {

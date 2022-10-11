@@ -58,15 +58,15 @@
             </mat-select>
           </mat-form-field>
 
-          <!--<mat-form-field appearance="fill" class="form-element">
+          <mat-form-field appearance="fill" class="form-element">
             <mat-label>Travellers City</mat-label>
             <mat-select formControlName="travellersCity" multiple>
               <mat-option *ngFor="let city of cities" [value]="city.city_id">
                 {{city.city + ', ' + city.state + ' (' + city.code + ')'}}
               </mat-option>
             </mat-select>
-          </mat-form-field>-->
-          <mat-chip-list #chipList aria-label="City selection">
+          </mat-form-field>
+          <!--<mat-chip-list #chipList aria-label="City selection">
             <mat-chip
               *ngFor="let city of selectedCities"
               [selectable]="selectable"
@@ -94,7 +94,7 @@
                 {{city.city + ', ' + city.state + ' (' + city.code + ')'}}
               </mat-option>
             </mat-autocomplete>
-          </mat-form-field>
+          </mat-form-field>-->
 
           <div class="form-element action-btns">
             <button mat-raised-button color="primary" type="submit" class="button btn"
