@@ -60,7 +60,7 @@
 
           <mat-form-field appearance="fill" class="form-element">
             <mat-label>Travellers City</mat-label>
-            <mat-select formControlName="travellersCity" multiple>
+            <mat-select formControlName="travellers" multiple>
               <mat-option *ngFor="let city of cities" [value]="city.city_id">
                 {{city.city + ', ' + city.state + ' (' + city.code + ')'}}
               </mat-option>
