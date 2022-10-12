@@ -45,7 +45,7 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
      {label: "Premium", value: "premium"}
   ];
 
-  cityCtrl = new FormControl();
+  // cityCtrl = new FormControl();
 
   cities: City[] = [];
   filteredCities?: Observable<City[]>;
@@ -110,28 +110,28 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
     });
   }
 
-  getFilteredCities() {
-    const val = this.ecoForm.get('travellers')?.value;
-    this.service.getFilteredCities(val).subscribe((data: any) => {
-      this.filteredCities = of(data.results);
-    })
-  }
-
-  displayFn(city?: any) {
-    return city ? city.name : undefined;
-  }
-
-  private _filter(city: string) {
-    const filterValue = city.toLowerCase();
-
-    return this.cities.filter(
-        city => city.city.toLowerCase().indexOf(filterValue) === 0
-    );
-  }
+  // getFilteredCities() {
+  //   const val = this.ecoForm.get('travellers')?.value;
+  //   this.service.getFilteredCities(val).subscribe((data: any) => {
+  //     this.filteredCities = of(data.results);
+  //   })
+  // }
+  //
+  // displayFn(city?: any) {
+  //   return city ? city.name : undefined;
+  // }
+  //
+  // private _filter(city: string) {
+  //   const filterValue = city.toLowerCase();
+  //
+  //   return this.cities.filter(
+  //       city => city.city.toLowerCase().indexOf(filterValue) === 0
+  //   );
+  // }
 
   onSubmit() {
     if(this.ecoForm.valid) {
-      const citiesSelected = this.selectedTravellers;
+      // const citiesSelected = this.selectedTravellers;
       const obj = this.ecoForm.value;
       // obj.travellers = citiesSelected;
       console.log('obj val is... @@@ ::: ', obj);
@@ -181,31 +181,31 @@ export class CarbonEmissionCalculatorComponent implements OnInit, AfterViewInit 
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
+  // add(event: MatChipInputEvent): void {
+  //   const input = event.input;
+  //   const value = event.value;
+  //
+  //   // Reset the input value
+  //   if (input) {
+  //     input.value = '';
+  //   }
+  //
+  //   this.cityCtrl.setValue(null);
+  // }
 
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
+  // remove(city: City): void {
+  //   const index = this.selectedCities.indexOf(city);
+  //
+  //   if (index >= 0) {
+  //     this.selectedCities.splice(index, 1);
+  //   }
+  // }
 
-    this.cityCtrl.setValue(null);
-  }
-
-  remove(city: City): void {
-    const index = this.selectedCities.indexOf(city);
-
-    if (index >= 0) {
-      this.selectedCities.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    const newValue = event.option.value;
-    this.selectedCities.push(event.option.value);
-    this.selectedTravellers.push(newValue.city_id);
-    this.cityInput.nativeElement.value = '';
-    this.cityCtrl.setValue(null);
-  }
+  // selected(event: MatAutocompleteSelectedEvent): void {
+  //   const newValue = event.option.value;
+  //   this.selectedCities.push(event.option.value);
+  //   this.selectedTravellers.push(newValue.city_id);
+  //   this.cityInput.nativeElement.value = '';
+  //   this.cityCtrl.setValue(null);
+  // }
 }
